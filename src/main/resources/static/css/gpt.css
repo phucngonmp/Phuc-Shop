@@ -1,0 +1,186 @@
+ nav {
+  background-color: #333;
+  overflow: hidden;
+}
+
+/* Style for the navigation links */
+nav a {
+  float: left;
+  display: block;
+  color: #fff;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+nav a:hover {
+  background-color: #ddd;
+  color: #333;
+}
+
+/* Style for the active link */
+nav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+.form-group select {
+	padding: 8px;
+	box-sizing: border-box;
+	border: 1px solid #3498db; /* Blue border, matching the label color */
+	border-radius: 5px;
+	margin-bottom: 10px; /* Added margin to separate input fields */
+	margin-left: 10px;
+	font-weight: bold;
+	color: #3498db; /* Blue color, you can change it as desired */
+}
+
+/* Add this CSS code for the modal */
+.modal {
+	display: none; /* Hide the modal by default */
+	max-width: 800px;
+	margin: 20px auto;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 60%;
+	height: 60%;
+	background-color: rgba(0, 0, 0, 0.7);
+	/* Semi-transparent black background */
+	justify-content: center;
+	align-items: center;
+}
+
+/* Adjust the style of the main element if needed */
+main {
+	margin-top: 100px; /* Add spacing from the top */
+	padding: 20px; /* Add padding if necessary */
+}
+
+.modal-content {
+	background-color: #fefefe;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	position: relative;
+}
+
+.close {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	font-size: 20px;
+	cursor: pointer;
+}
+
+/* Add more styling as needed for your form elements within the modal */
+.elegant-form {
+	max-width: 600px; /* Adjust the max-width as needed */
+	margin: 0 auto;
+}
+
+.form-row {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 15px;
+}
+
+.form-group {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+label {
+	margin-bottom: 5px;
+	font-weight: bold;
+	color: #3498db; /* Blue color, you can change it as desired */
+	margin-left: 10px;
+}
+
+input {
+	padding: 8px;
+	box-sizing: border-box;
+	border: 1px solid #3498db; /* Blue border, matching the label color */
+	border-radius: 5px;
+	margin-bottom: 10px; /* Added margin to separate input fields */
+	margin-left: 10px;
+}
+
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #f4f4f4;
+}
+
+header {
+	background-color: #333;
+	color: #fff;
+	padding: 10px;
+	text-align: center;
+}
+
+main {
+	max-width: 800px;
+	margin: 20px auto;
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+select {
+	padding: 10px;
+	margin: 5px;
+	font-size: 16px;
+}
+
+button {
+	padding: 10px 20px;
+	background-color: #4caf50;
+	color: white;
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+	margin-bottom: 40px;
+}
+
+th, td {
+	border: 1px solid #ddd;
+	padding: 12px;
+	text-align: left;
+}
+
+hr {
+	margin-bottom: 40px
+}
+
+th {
+	background-color: #333;
+	color: #fff;
+}
+
+.color-button {
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	margin-right: 5px;
+	border-radius: 0; /* Set border-radius to 0 for a square shape */
+	border: 2px solid transparent;
+	cursor: pointer;
+	background: #fff;
+	padding: 2px;
+}
+
+.color-button div {
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff; /* Màu xanh lá nhạt */
+            text-align: center;
+        }
+
+        h1 {
+            color: #008000; /* Màu xanh lá cây */
+        }
+
+        form {
+            max-width: 300px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        span {
+            color: #ff0000; /* Màu đỏ cho thông báo lỗi */
+        }
+
+        input[type="submit"] {
+            background-color: #008000; /* Màu xanh lá cây */
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #006400; /* Màu xanh lá cây đậm cho hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Login</h1>
+        <form th:action="@{/login}" method="post" th:object="${user}">
+            <label for="email">Email:</label>
+            <input type="text" id="email" th:field="*{email}" name="email" required><br>
+            <!-- <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span><br> -->
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" th:field="*{password}" name="password" required><br>
+            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span><br>
+			<div th:if="${error}" class="error-message">
+       			<p style="color: red"> Email isn't existed or Password is incorrect </p>
+    		</div>
+            <input type="submit" value="Login">
+            <p>Don't have an account? <a href="/phucshop/signup">Sign Up</a></p>
+        </form>
+    </div>
+</body>
+</html>

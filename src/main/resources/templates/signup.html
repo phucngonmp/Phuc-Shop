@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <style type="text/css">
+    body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff; /* Màu xanh lá nhạt */
+            text-align: center;
+        }
+
+        h1 {
+            color: #008000; /* Màu xanh lá cây */
+        }
+
+        form {
+            max-width: 300px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        span {
+            color: #ff0000; /* Màu đỏ cho thông báo lỗi */
+        }
+
+        input[type="submit"] {
+            background-color: #008000; /* Màu xanh lá cây */
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #006400; /* Màu xanh lá cây đậm cho hover */
+        }
+    
+    
+    </style>
+    <script th:inline="javascript">
+    /* JavaScript function to check if passwords match */
+    function checkPasswordMatch() {
+        var password = document.getElementById('password').value;
+        var repassword = document.getElementById('repassword').value;
+        var errorDiv = document.getElementById('passwordMatchError');
+        
+        if (password !== repassword) {
+            errorDiv.innerHTML = 'Passwords do not match!';
+            return false; // Prevent form submission
+        } else {
+            errorDiv.innerHTML = ''; // Clear any previous error message
+        }
+        
+        return true; // Allow form submission if passwords match
+    }
+</script>
+</head>
+<h1>User Registration</h1>
+    <form th:action="@{/register}" method="post" th:object="${user}" onsubmit="return checkPasswordMatch();">
+        <label for="email">Email:</label> 
+        <input type="text" id="email" th:field="*{email}" name="email" required="required"><br>
+        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red;"></span><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" th:field="*{password}" name="password" required="required"><br>
+        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: red;"></span><br> <!-- Style error message in red -->
+
+        <label for="repassword">Repeat Password:</label>
+        <input type="password" id="repassword" name="repassword" required="required"><br>
+        <div id="passwordMatchError" style="color: red;"></div>
+
+        <!-- Display error message if the username (email) exists -->
+        <div th:if="${emailExist}" class="error-message">
+            <p style="color: red">email already exists. Please choose another email.</p>
+        </div>
+
+        <input type="submit" value="Register">
+        <p>Have an account? <a href="/login">Login</a></p>
+    </form>
+</html>

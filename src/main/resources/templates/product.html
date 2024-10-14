@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Product</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Favicon -->
+<link rel="icon" type="image/png" th:src="@{/images/icons/favicon.png}" />
+
+<!-- CSS resources -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/fonts/font-awesome-4.7.0/css/font-awesome.min.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/fonts/iconic/css/material-design-iconic-font.min.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/fonts/linearicons-v1.0.0/icon-font.min.css}" />
+
+<!-- Vendor CSS resources -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{/vendor/animate/animate.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/vendor/css-hamburgers/hamburgers.min.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/vendor/animsition/css/animsition.min.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/vendor/select2/select2.min.css}" />
+<link rel="stylesheet" type="text css"
+	th:href="@{/vendor/perfect-scrollbar/perfect-scrollbar.css}" />
+
+<!-- Your CSS resources -->
+<link rel="stylesheet" type="text/css" th:href="@{/css/util.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
+<style>
+.color-button {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  background: #fff;
+  padding: 2px;
+}
+.chosen {
+  border-color: #000!important;
+}
+
+.color-button div {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+#red div {
+  background: red;
+}
+
+#blue div {
+  background: darkblue;
+}
+
+#yellow div {
+  background: yellow;
+}
+#pink div {
+  background: pink;
+}
+
+#black div {
+  background: black;
+}
+
+#white div {
+  background: white;
+}
+
+.button-size {
+  display: inline-block;
+  margin-right: 5px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  background: #fff;
+  padding: 10px;
+}
+
+.sold-out {
+  text-decoration: line-through;
+}
+</style>
+</head>
+<body class="animsition">
+
+	<div th:replace="fragments/header :: header"></div>
+
+
+	<!-- Product -->
+	<div class="bg0 m-t-23 p-b-140">
+		<div class="container">
+			<div class="flex-w flex-sb-m p-b-52">
+				<div class="flex-w flex-l-m filter-tope-group m-tb-10">
+					<button
+						class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1"
+						data-filter="*">All Products</button>
+
+					<div th:each="category : ${categories}">
+						<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5"
+							th:attr="data-filter='.' + ${category.name}">
+							<span th:text="${category.name}"></span>
+						</button>
+					</div>
+				</div>
+
+				<div class="flex-w flex-c-m m-tb-10">
+					<div
+						class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter">
+						<i
+							class="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-filter-list"></i>
+						<i
+							class="icon-close-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
+						Filter
+					</div>
+
+					<div
+						class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
+						<i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
+						<i
+							class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
+						Search
+					</div>
+				</div>
+
+				<!-- Search product -->
+				<div class="dis-none panel-search w-full p-t-10 p-b-15">
+					<div class="bor8 dis-flex p-l-15">
+						<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+							<i class="zmdi zmdi-search"></i>
+						</button>
+
+						<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text"
+							name="search-product" placeholder="Search">
+					</div>
+				</div>
+
+				<!-- Filter -->
+				<div class="dis-none panel-filter w-full p-t-10">
+					<div
+						class="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
+						<div class="filter-col1 p-r-15 p-b-27">
+							<div class="mtext-102 cl2 p-b-15">Sort By</div>
+
+							<ul>
+								<li class="p-b-6" th:class="${sortBy == '' ? 'filter-link-active' : ''}">
+								<a href="#"
+									class="filter-link stext-106 trans-04"> Default </a></li>
+
+								<li class="p-b-6"><a href="#"
+									class="filter-link stext-106 trans-04"> Popularity </a></li>
+
+								<li class="p-b-6"><a href="#"
+									class="filter-link stext-106 trans-04"> Average rating </a></li>
+
+								<li class="p-b-6">
+								<a href="#"
+									class="filter-link stext-106 trans-04">
+										Newness </a></li>
+
+								<li class="p-b-6" th:class="${sortBy == 'price-low-to-high' ? 'filter-link-active' : ''}">
+								<a  th:href="@{/products/sort-by-price-low-to-high}"
+									class="filter-link stext-106 trans-04"> Price: Low to High
+								</a></li>
+			
+								<li class="p-b-6" th:class="${sortBy == 'price-high-to-low' ? 'filter-link-active' : ''}">
+								<a th:href="@{/products/sort-by-price-high-to-low}"
+									class="filter-link stext-106 trans-04"> Price: High to Low
+								</a></li>
+							</ul>
+						</div>
+
+						<div class="filter-col2 p-r-15 p-b-27">
+							<div class="mtext-102 cl2 p-b-15">Price</div>
+
+							<ul>
+								<li class="p-b-6"><a href="#"
+									class="filter-link stext-106 trans-04 filter-link-active">
+										All </a></li>
+
+								<li class="p-b-6"><a href="#"
+									class="filter-link stext-106 trans-04"> $0.00 - $50.00 </a></li>
+
+								<li class="p-b-6"><a href="#"
+									class="filter-link stext-106 trans-04"> $50.00 - $100.00 </a></li>
+
+								<li class="p-b-6"><a href="#"
+									class="filter-link stext-106 trans-04"> $100.00 - $150.00 </a>
+								</li>
+
+								<li class="p-b-6"><a href="#"
+									class="filter-link stext-106 trans-04"> $150.00 - $200.00 </a>
+								</li>
+
+								<li class="p-b-6"><a href="#"
+									class="filter-link stext-106 trans-04"> $200.00+ </a></li>
+							</ul>
+						</div>
+
+						<div class="filter-col3 p-r-15 p-b-27">
+							<div class="mtext-102 cl2 p-b-15">Color</div>
+
+							<ul>
+								<li class="p-b-6"><span class="fs-15 lh-12 m-r-6"
+									style="color: #222;"> <i class="zmdi zmdi-circle"></i>
+								</span> <a href="#" class="filter-link stext-106 trans-04"> Black </a>
+								</li>
+
+								<li class="p-b-6"><span class="fs-15 lh-12 m-r-6"
+									style="color: #4272d7;"> <i class="zmdi zmdi-circle"></i>
+								</span> <a href="#"
+									class="filter-link stext-106 trans-04 filter-link-active">
+										Blue </a></li>
+
+								<li class="p-b-6"><span class="fs-15 lh-12 m-r-6"
+									style="color: #b3b3b3;"> <i class="zmdi zmdi-circle"></i>
+								</span> <a href="#" class="filter-link stext-106 trans-04"> Grey </a></li>
+
+								<li class="p-b-6"><span class="fs-15 lh-12 m-r-6"
+									style="color: #00ad5f;"> <i class="zmdi zmdi-circle"></i>
+								</span> <a href="#" class="filter-link stext-106 trans-04"> Green </a>
+								</li>
+
+								<li class="p-b-6"><span class="fs-15 lh-12 m-r-6"
+									style="color: #fa4251;"> <i class="zmdi zmdi-circle"></i>
+								</span> <a href="#" class="filter-link stext-106 trans-04"> Red </a></li>
+
+								<li class="p-b-6"><span class="fs-15 lh-12 m-r-6"
+									style="color: #aaa;"> <i class="zmdi zmdi-circle-o"></i>
+								</span> <a href="#" class="filter-link stext-106 trans-04"> White </a>
+								</li>
+							</ul>
+						</div>
+
+						<div class="filter-col4 p-b-27">
+							<div class="mtext-102 cl2 p-b-15">Tags</div>
+
+							<div class="flex-w p-t-4 m-r--5">
+								<a href="#"
+									class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+									Fashion </a> <a href="#"
+									class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+									Lifestyle </a> <a href="#"
+									class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+									Denim </a> <a href="#"
+									class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+									Streetstyle </a> <a href="#"
+									class="flex-c-m stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5">
+									Crafts </a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row isotope-grid">
+				<div th:each="product : ${products}" 
+					class="col-sm-6 col-md-4 col-lg-3 p-b-35  "  th:classappend="'isotope-item ' + ${product.category}">
+						<!-- Block2 -->
+						<div class="block2">
+							<div class="block2-pic hov-img0">
+								<img th:src="@{'/' + ${product.image}}" alt="IMG-PRODUCT" /> 
+								<a href="#" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-addcart"
+   th:attr="onclick='addToCart(\'' + ${product.slug} + '\')'"
+   th:id="'addtocart-button'"> <!-- block2-btn hoi ranh lam lai cai nay sau -->
+   Add To Cart
+</a>
+
+							</div>
+
+							<div class="block2-txt flex-w flex-t p-t-14">
+								<div class="block2-txt-child1 flex-col-l ">
+
+<div>
+    <div th:each="color, stat : ${product.colors}" th:id="${color}" class="color-button" 
+         th:classappend="${stat.first} ? 'chosen'" 
+         th:attr="onclick='handleClick(event, \'' + ${product.id} + '\', \'' + ${product.slug} + '\')'">
+        <div></div>
+    </div>
+</div>
+								<span
+      th:if="${#lists.size(product.colors) > 0}" 
+      ></span>
+      
+    
+<div id="getSize">
+      <div th:each="entry : ${product.sizeAndQuantity}" 
+     th:id="${entry.key}" 
+     th:classappend="${entry.value > 0} ? 'button-size' : 'button-size sold-out'" 
+     th:text = "${entry.key}"
+     onclick="handleClick2(event)">
+</div>
+</div>
+								
+								
+									<a th:href="@{/product-detail/{slug}(slug=${product.slug})}"
+										class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6"
+										th:text="${product.name}"> product name </a> 
+										<span class="stext-105 cl3" th:text="${#numbers.formatInteger(product.price, 0, 'COMMA')} + 'đ'">
+										$16.64 
+										</span>
+										
+
+								</div>
+
+								<div class="block2-txt-child2 flex-r p-t-3">
+									<a href="#"
+										class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+										<img class="icon-heart1 dis-block trans-04"
+										src="images/icons/icon-heart-01.png" alt="ICON"> <img
+										class="icon-heart2 dis-block trans-04 ab-t-l"
+										src="images/icons/icon-heart-02.png" alt="ICON">
+									</a>
+								</div>
+							</div>
+						</div>
+					
+				</div>
+
+
+				<!-- <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women"> dung cai nay de filter o client side -->
+
+			</div>
+			</div>
+
+			<!-- Load more -->
+			<div class="flex-c-m flex-w w-full p-t-45">
+				<a href="#"
+					class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
+					Load More </a>
+			</div>
+		</div>
+
+
+	<div th:replace="fragments/footer :: footer"></div>
+
+
+	<!-- Back to top -->
+	<div class="btn-back-to-top" id="myBtn">
+		<span class="symbol-btn-back-to-top"> <i
+			class="zmdi zmdi-chevron-up"></i>
+		</span>
+	</div>
+	<script>
+function handleClick(event, id, slug) {
+  // Remove border from all buttons
+  var buttons = document.getElementsByClassName('color-button');
+  for (var i = 0; i < buttons.length; i++) {
+    buttons[i].style.borderColor = 'transparent';
+    buttons[i].classList.remove('chosen');
+  }
+
+  // Add border to clicked button
+  event.target.parentNode.style.borderColor = '#000';
+  event.currentTarget.classList.add('chosen');
+  var color = event.currentTarget.id;
+
+  $.ajax({
+      url: '/phucshop/product-detail/' + slug + '/get-size',
+      type: 'post',
+      data: {
+      	id: id,
+      	color: color
+      	
+      },
+      success: function(responseData) {
+    	  console.log(responseData);
+    	  var parentDiv = document.querySelector('#getSize');
+    	  
+    		// Clear the parent div
+    	  while (parentDiv.firstChild) {
+    	      parentDiv.removeChild(parentDiv.firstChild);
+    	  }
+    	  
+    	  for (var key in responseData) {
+    		  // Create a new div
+    		  var newDiv = document.createElement('div');
+
+    		  // Set the id, text, and onclick attributes
+    		  newDiv.id = key;
+    		  newDiv.textContent = key;
+    		  newDiv.onclick = handleClick2;
+
+    		  // Add a class based on the value
+    		  if (responseData[key] > 0) {
+    		    newDiv.classList.add('button-size');
+    		  } else {
+    		    newDiv.classList.add('button-size', 'sold-out');
+    		  }
+
+    		  // Append the new div to the parent div
+    		  parentDiv.appendChild(newDiv);
+    		}
+    	  
+      }
+  });
+}
+</script>
+
+<script>
+function handleClick2(event) {
+	  // Remove chosen-size class from all buttons
+	  var buttons = document.getElementsByClassName('button-size');
+	  var isSoldOut = event.currentTarget.classList.contains('sold-out');
+
+	  // If the size is sold out, return early to prevent the rest of the function from running
+	  if (isSoldOut) {
+	    return;
+	  }
+	  for (var i = 0; i < buttons.length; i++) {
+		  buttons[i].classList.remove('chosen');
+	  }
+
+	  // Add chosen-size class to clicked button
+	  event.currentTarget.classList.add('chosen');
+	}
+
+</script>
+<script>
+    function addToCart(productSlug) {
+    	console.log('Sending AJAX request for product ' + productSlug);
+		
+		
+		// Get the chosen color
+		  	var chosenColorElement = document.querySelector('.color-button.chosen');
+			var chosenColor = chosenColorElement ? chosenColorElement.id : null;
+
+			var chosenSizeElement = document.querySelector('.button-size.chosen');
+			var chosenSize = chosenSizeElement ? chosenSizeElement.id : null;
+		  	
+			console.log(chosenSize === null);
+		  	if(chosenSize === null){
+		  		alert("please choose size");
+		  		return;
+		  	}
+		  	swal("", "Added to cart !", "success");
+    	
+        $.ajax({
+            url: '/phucshop/cart/add-to-cart',
+            type: 'post',
+            data: {
+            	productSlug: productSlug,
+            	color: chosenColor,
+            	size: chosenSize
+            },
+            success: function(responseData) {
+            	//	var responseData = JSON.parse(response); neu o day m dung responseEntity ben back end
+             // Update the data-notify attribute
+                updateDataNotify(responseData.totalItems);
+             // Update the total price in the HTML
+                updateTotalPrice(responseData.totalPrice);
+             // Update the cart items dynamically
+             	console.log(responseData.cart);
+                updateCartItems(responseData.cartItems);
+            }
+        });
+    }
+    function updateDataNotify(newCount) {
+        // Update the data-notify attribute with the new count
+        console.log(newCount);
+        $(".js-show-cart").attr("data-notify", newCount);
+    }
+    function updateTotalPrice(newTotalPrice) {
+        // Convert the string to a number (if it's a string)
+        var numericPrice = parseFloat(newTotalPrice);
+        
+        // Check if the conversion was successful
+        if (!isNaN(numericPrice)) {
+            // Format the total price in JavaScript
+            var formattedPrice = numericPrice.toLocaleString('en-US');
+            
+            // Update the total price in the HTML
+            $(".header-cart-total").text("Total: " + formattedPrice + 'đ');
+        } else {
+            console.error("Invalid numeric value for total price");
+        }
+    }
+    
+    function updateCartItems(cartItems) {
+        // Assuming cartItems is an array of objects representing cart items
+        var cartHtml = '';
+
+        for (var i = 0; i < cartItems.length; i++) { // vi day la duyet theo i nen muon lay duoc productDTO thi phai dung key de lay
+            var item = cartItems[i];
+        	console.log(item);
+            // format price
+            var numericPrice = parseFloat(item.price);
+            var formattedPrice = numericPrice.toLocaleString('en-US');
+            cartHtml += '<li class="header-cart-item flex-w flex-t m-b-12">';
+            cartHtml += '<div class="header-cart-item-img">';
+            cartHtml += '<img src="/phucshop/' + item.image + '" alt="IMG">';
+            cartHtml += '</div>';
+            cartHtml += '<div class="header-cart-item-txt p-t-8">';
+            cartHtml += '<a href="/phucshop/product-detail/' + item.slug + '" class="header-cart-item-name m-b-18 hov-cl1 trans-04">' + item.name + '</a>';
+            cartHtml += '<span class="header-cart-item-info">' + item.color+ ', ' + item.size + '</span>';
+            cartHtml += '<span class="header-cart-item-info">' + item.quantity + 'x ' + formattedPrice + 'đ' + '</span>';
+            cartHtml += '</div>';
+            cartHtml += '</li>';
+        }
+
+        // Update the HTML content of the cart items container
+        $('.header-cart-wrapitem').html(cartHtml);
+    }
+
+</script>
+
+	
+
+	<!--===============================================================================================-->
+	<script th:src="@{/vendor/jquery/jquery-3.2.1.min.js}"></script>
+	<!--===============================================================================================-->
+	<script th:src="@{/vendor/animsition/js/animsition.min.js}"></script>
+	<!--===============================================================================================-->
+	<script th:src="@{/vendor/bootstrap/js/popper.js}"></script>
+	<script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+	<!--===============================================================================================-->
+	<script th:src="@{/vendor/select2/select2.min.js}"></script>
+	<script>
+		$(".js-select2").each(function() {
+			$(this).select2({
+				minimumResultsForSearch : 20,
+				dropdownParent : $(this).next('.dropDownSelect2')
+			});
+		})
+	</script>
+	<!--===============================================================================================-->
+	<script th:src="@{/vendor/daterangepicker/moment.min.js}"></script>
+	<script th:src="@{/vendor/daterangepicker/daterangepicker.js}"></script>
+	<!--===============================================================================================-->
+	<script th:src="@{/vendor/slick/slick.min.js}"></script>
+	<script th:src="@{/js/slick-custom.js}"></script>
+	<!--===============================================================================================-->
+	<script th:src="@{/vendor/parallax100/parallax100.js}"></script>
+	<script>
+		$('.parallax100').parallax100();
+	</script>
+	<!--===============================================================================================-->
+	<script th:src="@{/vendor/MagnificPopup/jquery.magnific-popup.min.js}"></script>
+	<script>
+		$('.gallery-lb').each(function() { // the containers for all your galleries
+			$(this).magnificPopup({
+				delegate : 'a', // the selector for gallery item
+				type : 'image',
+				gallery : {
+					enabled : true
+				},
+				mainClass : 'mfp-fade'
+			});
+		});
+	</script>
+	<!--===============================================================================================-->
+	<script th:src="@{/vendor/isotope/isotope.pkgd.min.js}"></script>
+	<!--===============================================================================================-->
+	<script th:src="@{/vendor/sweetalert/sweetalert.min.js}"></script>
+	<script>
+		$('.js-addwish-b2, .js-addwish-detail').on('click', function(e) {
+			e.preventDefault();
+		});
+
+		$('.js-addwish-b2').each(
+				function() {
+					var nameProduct = $(this).parent().parent().find(
+							'.js-name-b2').html();
+					$(this).on('click', function() {
+						swal(nameProduct, "is added to wishlist !", "success");
+
+						$(this).addClass('js-addedwish-b2');
+						$(this).off('click');
+					});
+				});
+
+		$('.js-addwish-detail').each(
+				function() {
+					var nameProduct = $(this).parent().parent().parent().find(
+							'.js-name-detail').html();
+
+					$(this).on('click', function() {
+						swal(nameProduct, "is added to wishlist !", "success");
+
+						$(this).addClass('js-addedwish-detail');
+						$(this).off('click');
+					});
+				});
+
+		/*---------------------------------------------*/
+
+		$('.js-addcart-detail').each(
+				function() {
+					var nameProduct = $(this).parent().parent().parent()
+							.parent().find('.js-name-detail').html();
+					$(this).on('click', function() {
+						swal(nameProduct, "is added to cart !", "success");
+					});
+				});
+	</script>
+	<!--===============================================================================================-->
+	<script th:src="@{/vendor/perfect-scrollbar/perfect-scrollbar.min.js}"></script>
+	<script>
+		$('.js-pscroll').each(function() {
+			$(this).css('position', 'relative');
+			$(this).css('overflow', 'hidden');
+			var ps = new PerfectScrollbar(this, {
+				wheelSpeed : 1,
+				scrollingThreshold : 1000,
+				wheelPropagation : false,
+			});
+
+			$(window).on('resize', function() {
+				ps.update();
+			})
+		});
+	</script>
+	<!--===============================================================================================-->
+	<script th:src="@{/js/main.js}"></script>
+
+</body>
+</html>
